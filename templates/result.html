@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты проверки</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .container {
+            overflow-y: auto;
+        }
+
+
+    </style>
+</head>
+<body id="top">
+    <div class="container">
+        <h1>Результаты проверки на плагиат</h1>
+        <div class="result-block">
+            <p><strong>Проверяемый текст:</strong></p>
+            <blockquote>{{ input_text }}</blockquote>
+            <h2>Список документов с совпадениями:</h2>
+            {% if results %}
+            <ul>
+                {% for result in results %}
+                <li class="result-item">
+                    <p><strong>Документ:</strong> {{ result.document }}</p>
+                    <p class="document-summary">Описание: Пример текста из базы данных.</p>
+                    <p><strong>Процент совпадения:</strong> <span class="similarity">{{ "%.2f" % result.similarity }}%</span></p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Совпадения не найдены.</p>
+            {% endif %}
+        </div>
+        <a href="/">Проверить другой текст</a>
+    </div>
+
+</body>
+</html>

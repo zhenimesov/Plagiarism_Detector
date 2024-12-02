@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка текста на плагиат</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Проверка текста на плагиат</h1>
+        <form action="/check" method="POST">
+            <label for="query">Введите текст для проверки:</label>
+            <textarea id="query" name="query" rows="4" cols="50"></textarea>
+            <button type="submit">Проверить</button>
+        </form>
+    </div>
+</body>
+</html>
