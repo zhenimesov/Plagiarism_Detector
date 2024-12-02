@@ -29,7 +29,7 @@ plagiarism_checker/
 1. **Клонируйте репозиторий:**
 
    ```bash
-   git clone https://github.com/zhenimesov/plagiarism_checker.git
+   git clone https://github.com/zhenimesov/plagiarism_detector.git
    cd plagiarism_checker
    ```
 
