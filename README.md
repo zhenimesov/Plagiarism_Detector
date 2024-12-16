@@ -95,7 +95,3 @@ plagiarism_checker/
 ```
 Этот проект распространяется под лицензией MIT. См. файл LICENSE для подробностей.
 ```
-
-### Автор
-
-[github.com/zhenimesov](https://github.com/zhenimesov)
