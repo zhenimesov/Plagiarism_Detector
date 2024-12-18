@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Добавить документ</title>
+</head>
+<body>
+<div class="container">
+    <h1>Добавить документ в базу данных</h1>
+    <form action="/add" method="POST">
+        <label for="document_name">Название документа:</label>
+        <input type="text" id="document_name" name="document_name" required><br><br>
+
+        <label for="document_content">Содержимое документа:</label><br>
+        <textarea id="document_content" name="document_content" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="submit">Добавить</button>
+    </form>
+</div>
+</body>
+</html>

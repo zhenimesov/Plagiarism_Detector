@@ -23,6 +23,10 @@ class PlagiarismDetector:
             print(f"Файл базы данных {self.json_db_path} не найден.")
             return []
 
+    def refresh_documents(self):
+        """Обновляет внутренний список документов из JSON-базы."""
+        self.documents = self.load_json_database()
+
     def find_matches(self, query_text, similarity_threshold=10.0):
         """Поиск совпадений с использованием JSON-базы и фильтрация по порогу схожести."""
         if not self.documents:
@@ -50,3 +54,5 @@ class PlagiarismDetector:
                     "similarity": round(similarity * 100, 2)
                 })
         return sorted(results, key=lambda x: x["similarity"], reverse=True)
+
+

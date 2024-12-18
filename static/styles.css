@@ -23,6 +23,41 @@ body {
     box-sizing: border-box;
 }
 
+/* Стили для верхнего правого контейнера */
+.container-right {
+    position: fixed; /* Зафиксировано в правом верхнем углу */
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    background-color: #ffffff; /* Белый фон */
+    padding: 10px 15px; /* Отступы внутри */
+    border-radius: 8px; /* Скругление углов */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для контейнера */
+    text-align: center; /* Текст по центру */
+    font-size: 14px; /* Мелкий размер шрифта */
+    z-index: 10; /* Поверх остального контента */
+}
+
+.container-right p {
+    margin: 0 0 10px; /* Убираем отступ сверху и добавляем снизу */
+    font-weight: bold; /* Жирный текст */
+    color: #333; /* Темно-серый цвет */
+}
+
+.container-right button {
+    background-color: #4CAF50; /* Зеленый фон кнопки */
+    color: #fff; /* Белый текст */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругление углов кнопки */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: background-color 0.3s ease;
+}
+
+.container-right button:hover {
+    background-color: #45a049; /* Цвет кнопки при наведении */
+}
+
+
 /* Заголовки */
 h1, h2 {
     text-align: center;
