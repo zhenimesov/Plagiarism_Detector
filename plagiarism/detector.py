@@ -3,6 +3,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import faiss
 
+from plagiarism.json_parser_handler import JsonParserHandler
+
+
 class PlagiarismDetector:
     def __init__(self, faiss_index_path=None, json_db_path="documents.json"):
         self.faiss_index = None
@@ -46,13 +49,25 @@ class PlagiarismDetector:
         # Формирование результата с фильтрацией по порогу схожести
         results = []
         for i, similarity in enumerate(similarities):
-            if similarity * 100 > similarity_threshold:  # Фильтруем по схожести
+            if similarity * 100 > similarity_threshold:
                 results.append({
                     "document_id": self.documents[i]["id"],
                     "title": self.documents[i]["title"],
                     "content": self.documents[i]["content"],
                     "similarity": round(similarity * 100, 2)
                 })
+
+        # Сохраняем операцию проверки в историю
+        if results:
+            JsonParserHandler(self.json_db_path).add_to_history(
+                "checks",
+                "Проверка текста на плагиат",
+                details={
+                    "query_text": query_text,
+                    "results": results
+                }
+            )
+
         return sorted(results, key=lambda x: x["similarity"], reverse=True)
 
 

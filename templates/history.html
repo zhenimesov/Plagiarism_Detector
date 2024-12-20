@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История операций</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .tab {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #bbb;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function showTab(tabName) {
+            const contents = document.querySelectorAll('.content');
+            const buttons = document.querySelectorAll('.tab button');
+            contents.forEach(c => c.classList.remove('active'));
+            buttons.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`button[data-tab="${tabName}"]`).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>История операций</h1>
+        <div class="tab">
+            <button class="active" data-tab="additions" onclick="showTab('additions')">Добавления</button>
+            <button data-tab="checks" onclick="showTab('checks')">Проверки</button>
+        </div>
+
+        <div id="additions" class="content active">
+            <h2>История добавлений</h2>
+            <ul>
+                {% for record in history.get('additions', []) %}
+                    <li>{{ record.timestamp }} - {{ record.operation }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div id="checks" class="content">
+            <h2>История проверок</h2>
+            <ul>
+                {% for record in history.get('checks', []) %}
+                    <li>
+                        {{ record.timestamp }} - {{ record.operation }}
+                        <details>
+                            <summary>Подробнее</summary>
+                            <p>Текст запроса: {{ record.details.query_text }}</p>
+                            <p>Результаты:</p>
+                            <ul>
+                                {% for result in record.details.results %}
+                                    <li>{{ result.title }} - Сходство: {{ result.similarity }}%</li>
+                                {% endfor %}
+                            </ul>
+                        </details>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a href="/">Вернуться на главную</a>
+    </div>
+</body>
+</html>

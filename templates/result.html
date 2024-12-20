@@ -3,37 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты проверки</title>
+    <title>Результаты проверки на плагиат</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-        .container {
-            overflow-y: auto;
+        .hidden {
+            display: none;
+        }
+        .document-content {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
         }
     </style>
 </head>
-<body id="top">
+<body>
 <div class="container">
     <h1>Результаты проверки на плагиат</h1>
-    <div class="result-block">
-        <p><strong>Проверяемый текст:</strong></p>
-        <blockquote>{{ input_text }}</blockquote>
-        <h2>Список документов с совпадениями:</h2>
-        {% if results %}
-        <ul>
-            {% for result in results %}
-            <li class="result-item">
-                <p><strong>{{ result.title }}:</strong></p>
-                <p class="document-summary">Описание: {{ result.content }}</p>
-                <p><strong>Процент совпадения:</strong> <span
-                        class="similarity">{{ "%.2f" % result.similarity }}%</span></p>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Совпадения не найдены.</p>
-        {% endif %}
+
+    <h2>Введённый текст:</h2>
+    <div class="query-text">
+        <p>{{ input_text }}</p>
     </div>
-    <a href="/">Проверить другой текст</a>
+
+    <h2>Совпадения:</h2>
+    {% if results %}
+        {% for result in results %}
+        <div class="result">
+            <p><strong>{{ result.title }}</strong> (Схожесть: {{ result.similarity }}%)</p>
+            <button class="toggle-btn" data-target="doc-{{ result.document_id }}">Раскрыть</button>
+            <div id="doc-{{ result.document_id }}" class="document-content hidden">
+                <p>{{ result.content }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Совпадений не найдено.</p>
+    {% endif %}
+    <a href="/" class="btn">Вернуться на главную</a>
 </div>
+
+<script>
+    // JavaScript для раскрытия и скрытия документа
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".toggle-btn");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                const targetId = button.getAttribute("data-target");
+                const contentDiv = document.getElementById(targetId);
+
+                if (contentDiv.classList.contains("hidden")) {
+                    contentDiv.classList.remove("hidden");
+                    button.textContent = "Скрыть";
+                } else {
+                    contentDiv.classList.add("hidden");
+                    button.textContent = "Раскрыть";
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
